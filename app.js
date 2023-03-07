@@ -3,7 +3,18 @@ import { words } from "./dictionary.js";
 const template = document.querySelector("template");
 const canvas = document.querySelector("#game-container");
 
+// Guess letter status enumeration
+const letterStatus = Object.freeze({
+  NOT_IN_WORD: 0,
+  WRONG_PLACE: 1,
+  CORRECT: 2,
+});
+
 setUpBoard();
+
+let secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
+console.log(secretWord);
+
 let playing = true;
 
 let currentRow = 0;
@@ -36,7 +47,6 @@ function setUpBoard() {
 }
 
 function processKeyPress(key) {
-
   if (isLetter(key)) {
     key = key.toUpperCase();
     if (currentSquareElement.textContent === "") {
@@ -53,8 +63,17 @@ function processKeyPress(key) {
 
   if (key === "Enter") {
     if (guessWordIsComplete()) {
-      let guessLetters = getGuessLetters();
-      console.log(guessLetters);
+      const guessLetters = getGuessLetters();
+      const turnResults = checkIfCorrect(guessLetters);
+      console.log(turnResults);
+      if (turnResults.every((result) => result === letterStatus.CORRECT)) {
+        console.log("YOU WON!");
+      } else {
+        currentRow = currentRow + 1;
+        currentSquare = 0;
+        currentRowElement = document.querySelector(`#row-${currentRow}`);
+        currentSquareElement = currentRowElement.children[currentSquare];
+      }
     }
   }
 
@@ -66,29 +85,58 @@ function processKeyPress(key) {
 }
 
 function isLetter(s) {
-    let isSingleLetter =
+  let isSingleLetter =
     s.length === 1 &&
     s.toUpperCase().charCodeAt() - 64 <= 26 &&
     s.toUpperCase().charCodeAt() - 64 >= 1;
 
-    return isSingleLetter;
+  return isSingleLetter;
 }
 
-function guessWordIsComplete () {
-    for (let square of currentRowElement.childNodes) {
-        if (square.textContent === "") {
-            return false;
-        }
+function guessWordIsComplete() {
+  for (let square of currentRowElement.childNodes) {
+    if (square.textContent === "") {
+      return false;
     }
-    return true;
+  }
+  return true;
 }
 
 function getGuessLetters() {
-    let letters = [];
+  let letters = [];
 
-    for (let square of currentRowElement.children) {
-        letters.push(square.textContent);
+  for (let square of currentRowElement.children) {
+    letters.push(square.textContent);
+  }
+
+  return letters;
+}
+
+function checkIfCorrect(guessLetters) {
+  const results = [];
+  const secretWordAsArray = secretWord.split("");
+
+  for (let i = 0; i < guessLetters.length; i++) {
+    // Is this letter correct?
+    if (guessLetters[i] === secretWordAsArray[i]) {
+      results.push(letterStatus.CORRECT);
+      secretWordAsArray[i] = "#";
+      continue;
     }
 
-    return letters;
+    // Get index of guess letter in secret word (-1 if not present)
+    const indexInWord = secretWordAsArray.indexOf(guessLetters[i]);
+
+    // Is letter not present?
+    if (indexInWord === -1) {
+      results.push(letterStatus.NOT_IN_WORD);
+      continue;
+    }
+
+    // Letter must be in wrong place
+    secretWordAsArray[indexInWord] = "#";
+    results.push(letterStatus.WRONG_PLACE);
+  }
+
+  return results;
 }
