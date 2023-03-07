@@ -47,6 +47,9 @@ function setUpBoard() {
 }
 
 function processKeyPress(key) {
+  if (!playing) {
+    return;
+  }
   if (isLetter(key)) {
     key = key.toUpperCase();
     if (currentSquareElement.textContent === "") {
@@ -65,11 +68,21 @@ function processKeyPress(key) {
     if (guessWordIsComplete()) {
       const guessLetters = getGuessLetters();
       const turnResults = checkIfCorrect(guessLetters);
+
+      if (!turnResults.every((result) => result === letterStatus.NOT_IN_WORD)) {
+        setSquareColours(turnResults);
+      }
+
       console.log(turnResults);
       if (turnResults.every((result) => result === letterStatus.CORRECT)) {
-        console.log("YOU WON!");
+        alert("You won!");
+        playing = false;
       } else {
         currentRow = currentRow + 1;
+        if (currentRow === 6) {
+            alert(`You lost!\nThe word was ${secretWord}.`);
+            playing = false;
+        }
         currentSquare = 0;
         currentRowElement = document.querySelector(`#row-${currentRow}`);
         currentSquareElement = currentRowElement.children[currentSquare];
@@ -139,4 +152,18 @@ function checkIfCorrect(guessLetters) {
   }
 
   return results;
+}
+
+function setSquareColours(results) {
+
+    const squareElements = currentRowElement.children;
+
+    for (let i = 0; i < results.length; i++) {
+        if (results[i] === letterStatus.CORRECT) {
+            squareElements[i].classList.add("square-correct");
+        }
+        if (results[i] === letterStatus.WRONG_PLACE) {
+            squareElements[i].classList.add("square-wrong-place");
+        }
+    }
 }
