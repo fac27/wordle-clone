@@ -36,12 +36,8 @@ function setUpBoard() {
 }
 
 function processKeyPress(key) {
-  const isLetter =
-    key.length === 1 &&
-    key.toUpperCase().charCodeAt() - 64 <= 26 &&
-    key.toUpperCase().charCodeAt() - 64 >= 1;
 
-  if (isLetter) {
+  if (isLetter(key)) {
     key = key.toUpperCase();
     if (currentSquareElement.textContent === "") {
       currentSquareElement.textContent = key;
@@ -56,7 +52,10 @@ function processKeyPress(key) {
   }
 
   if (key === "Enter") {
-    let guessWord = getGuessWord();
+    if (guessWordIsComplete()) {
+      let guessLetters = getGuessLetters();
+      console.log(guessLetters);
+    }
   }
 
   if (key === "Backspace") {
@@ -66,6 +65,30 @@ function processKeyPress(key) {
   }
 }
 
-function getGuessWord() {
-    
+function isLetter(s) {
+    let isSingleLetter =
+    s.length === 1 &&
+    s.toUpperCase().charCodeAt() - 64 <= 26 &&
+    s.toUpperCase().charCodeAt() - 64 >= 1;
+
+    return isSingleLetter;
+}
+
+function guessWordIsComplete () {
+    for (let square of currentRowElement.childNodes) {
+        if (square.textContent === "") {
+            return false;
+        }
+    }
+    return true;
+}
+
+function getGuessLetters() {
+    let letters = [];
+
+    for (let square of currentRowElement.children) {
+        letters.push(square.textContent);
+    }
+
+    return letters;
 }
