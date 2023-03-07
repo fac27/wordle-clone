@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Mark's WORDLE clone</title>
+  </head>
+  <body class="stack" data-theme="dark">
+    <header></header>
+    <main class="center">
+      <article id="game-container">
+      </article>
+    </main>
+    <!-- 
+        HTML template containing elements for one game board row
+     -->
+    <template>
+      <div class="row">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+      </div>
+    </template>
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
