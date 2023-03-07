@@ -26,7 +26,7 @@ html {
 
 body {
     background-color: var(--page-bg-color);
-    color: var(--page-textorates-color);
+    color: var(--page-text-color);
     overflow-x: hidden;
 }
 
