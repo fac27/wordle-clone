@@ -109,9 +109,7 @@ header {
 }
 
 .spin-to-correct {
-    transform: rotateX(0deg);
     animation: spin-to-correct var(--animation-speed) forwards;
-    animation-direction: alternate;
 }
 
 @keyframes spin-to-correct {
@@ -132,9 +130,7 @@ header {
 }
 
 .spin-to-wrong-place {
-    transform: rotateX(0deg);
     animation: spin-to-wrong-place var(--animation-speed) forwards;
-    animation-direction: alternate;
 }
 
 @keyframes spin-to-wrong-place {
@@ -155,9 +151,7 @@ header {
 }
 
 .spin-to-incorrect {
-    transform: rotateX(0deg);
     animation: spin-to-incorrect var(--animation-speed) forwards;
-    animation-direction: alternate;
 }
 
 @keyframes spin-to-incorrect {
