@@ -69,9 +69,7 @@ function processKeyPress(key) {
       const guessLetters = getGuessLetters();
       const turnResults = checkIfCorrect(guessLetters);
 
-      if (!turnResults.every((result) => result === letterStatus.NOT_IN_WORD)) {
         setSquareColours(turnResults);
-      }
 
       console.log(turnResults);
       if (turnResults.every((result) => result === letterStatus.CORRECT)) {
@@ -160,10 +158,16 @@ function setSquareColours(results) {
 
     for (let i = 0; i < results.length; i++) {
         if (results[i] === letterStatus.CORRECT) {
-            squareElements[i].classList.add("square-correct");
+            squareElements[i].classList.add(`animate-order-${i+1}`);
+            squareElements[i].classList.add("spin-to-correct");
         }
         if (results[i] === letterStatus.WRONG_PLACE) {
-            squareElements[i].classList.add("square-wrong-place");
+          squareElements[i].classList.add(`animate-order-${i+1}`);
+            squareElements[i].classList.add("spin-to-wrong-place");
+        }
+        if (results[i] === letterStatus.NOT_IN_WORD) {
+          squareElements[i].classList.add(`animate-order-${i+1}`);
+          squareElements[i].classList.add("spin-to-incorrect");
         }
     }
 }
