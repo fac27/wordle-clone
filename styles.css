@@ -14,18 +14,26 @@
     --box-bg-color: #403e4f;
     --box-border-color: #fff;
     --box-text-color: #fff;
+    --box-incorrect-bg-color: #403e4f;
     --box-correct-bg-color: #2fcf4a;
     --box-wrong-place-bg-color: #dbd527;
+    --box-incorrect-text-color: #fff;
+    --box-correct-text-color: #fff;
+    --box-wrong-place-text-color: #fff;
 }
 
 [data-theme="light"] {
     --page-bg-color: #fff;
     --page-text-color: #646464;
-    --box-bg-color: #9b9b9b;
-    --box-border-color: #fff;
-    --box-text-color: #fff;
+    --box-bg-color: #fff;
+    --box-border-color: #acacac;
+    --box-text-color: #646464;
+    --box-incorrect-bg-color: #898989;
     --box-correct-bg-color: #2fcf4a;
     --box-wrong-place-bg-color: #dbd527;
+    --box-incorrect-text-color: #fff;
+    --box-correct-text-color: #fff;
+    --box-wrong-place-text-color: #fff;
 }
 
 html {
@@ -71,7 +79,7 @@ header {
     width: 100%;
     height: 100%;
     gap: 8px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-weight: 600;
     user-select: none;
 }
@@ -95,12 +103,12 @@ header {
 
 .square-correct {
     background-color: var(--box-correct-bg-color);
-    color: #fff;
+    color: var(--box-correct-text-color);
 }
 
 .square-wrong-place {
     background-color: var(--box-wrong-place-bg-color);
-    color: #fff;
+    color: var(--box-wrong-place-text-color);
 }
 
 .center {
@@ -116,16 +124,19 @@ header {
     0% {
         transform: rotateX(0deg);
         background-color: var(--box-bg-color);
+        color: var(--box-bg-color);
     }
 
     50% {
         transform: rotateX(90deg);
         background-color: var(--box-bg-color);
+        color: var(--box-bg-color);
     }
 
     100% {
         transform: rotateX(0deg);
         background-color: var(--box-correct-bg-color);
+        color: var(--box-correct-text-color);
     }
 }
 
@@ -137,16 +148,19 @@ header {
     0% {
         transform: rotateX(0deg);
         background-color: var(--box-bg-color);
+        color: var(--box-bg-color);
     }
 
     50% {
         transform: rotateX(90deg);
         background-color: var(--box-bg-color);
+        color: var(--box-bg-color);
     }
 
     100% {
         transform: rotateX(0deg);
         background-color: var(--box-wrong-place-bg-color);
+        color: var(--box-wrong-place-text-color);
     }
 }
 
@@ -157,14 +171,20 @@ header {
 @keyframes spin-to-incorrect {
     0% {
         transform: rotateX(0deg);
+        background-color: var(--box-bg-color);
+        color: var(--box-bg-color);
     }
 
     50% {
         transform: rotateX(90deg);
+        background-color: var(--box-bg-color);
+        color: var(--box-bg-color);
     }
 
     100% {
         transform: rotateX(0deg);
+        background-color: var(--box-incorrect-bg-color);
+        color: var(--box-incorrect-text-color);
     }
 }
 
